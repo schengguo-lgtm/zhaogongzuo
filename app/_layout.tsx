@@ -1,6 +1,6 @@
 /**
- * Root layout — initializes i18n, Firebase auth listener, and handles
- * navigation between auth and main app flows.
+ * Root layout — initializes i18n, restores session from AsyncStorage,
+ * and handles navigation between auth and main app flows.
  */
 
 import React, { useEffect, useState } from 'react';
@@ -25,16 +25,21 @@ function RootLayoutNav() {
   const router = useRouter();
 
   useEffect(() => {
+    // Wait until session restore + Firebase check is done
     if (isLoading) return;
 
     const inAuthGroup = segments[0] === '(auth)';
+    const inTabsGroup = segments[0] === '(tabs)';
 
     if (!isAuthenticated && !inAuthGroup) {
+      // Not logged in — send to language/login
       router.replace('/(auth)/language');
     } else if (isAuthenticated && hasCompletedOnboarding && inAuthGroup) {
+      // Fully authenticated and onboarded — go to main app
       router.replace('/(tabs)');
-    } else if (isAuthenticated && !hasCompletedOnboarding) {
-      // still show role selection
+    } else if (isAuthenticated && !hasCompletedOnboarding && !inAuthGroup) {
+      // Logged in but hasn't chosen a role yet
+      router.replace('/(auth)/role');
     }
   }, [isAuthenticated, isLoading, hasCompletedOnboarding, segments, router]);
 

@@ -11,6 +11,7 @@ import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Colors } from '../../src/constants/colors';
 import { useAuthStore } from '../../src/store/authStore';
+import { persistSession } from '../../src/hooks/useAuth';
 import type { UserRole } from '../../src/types';
 
 interface RoleOption {
@@ -44,12 +45,21 @@ const ROLE_OPTIONS: RoleOption[] = [
 export default function RoleScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const { updateRole, setHasCompletedOnboarding } = useAuthStore();
+  const { updateRole, setHasCompletedOnboarding, appUser } = useAuthStore();
   const [selected, setSelected] = useState<UserRole>('worker');
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     updateRole(selected);
     setHasCompletedOnboarding(true);
+    // Persist the completed onboarding + selected role before navigating away,
+    // so the user's role is saved even if the app is closed immediately after.
+    if (appUser) {
+      try {
+        await persistSession({ ...appUser, role: selected }, true);
+      } catch {
+        // Persistence failure is non-fatal; the in-memory state is already updated.
+      }
+    }
     router.replace('/(tabs)');
   };
 

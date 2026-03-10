@@ -43,6 +43,7 @@ const zh = {
     verify: '验证',
     resend: '重新发送',
     resend_in: '{{seconds}}秒后重新发送',
+    resend_success: '验证码已重新发送',
     agree_terms: '我同意使用条款和隐私政策',
     view_terms: '查看条款',
     role_select: '选择角色',

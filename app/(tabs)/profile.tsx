@@ -7,7 +7,6 @@ import {
   SafeAreaView,
   ScrollView,
   Alert,
-  Image,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -17,6 +16,7 @@ import { LanguageSelector } from '../../src/components/LanguageSelector';
 import { setStoredLanguage, type SupportedLanguage } from '../../src/i18n';
 import { useAppStore } from '../../src/store/appStore';
 import { signOut } from '../../src/services/auth';
+import { clearSession } from '../../src/hooks/useAuth';
 
 const ROLE_LABELS: Record<string, string> = {
   worker: '👷 구직자',
@@ -46,8 +46,10 @@ export default function ProfileScreen() {
           try {
             await signOut();
           } catch {
-            // already signed out
+            // already signed out from Firebase
           }
+          // Clear persisted session from AsyncStorage
+          await clearSession().catch(console.error);
           reset();
           router.replace('/(auth)/language');
         },

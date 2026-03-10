@@ -43,6 +43,7 @@ const en = {
     verify: 'Verify',
     resend: 'Resend',
     resend_in: 'Resend in {{seconds}}s',
+    resend_success: 'Verification code resent',
     agree_terms: 'I agree to the Terms of Service and Privacy Policy',
     view_terms: 'View Terms',
     role_select: 'Select Role',

@@ -43,6 +43,7 @@ const ko = {
     verify: '인증하기',
     resend: '재전송',
     resend_in: '{{seconds}}초 후 재전송',
+    resend_success: '인증 코드가 재전송되었습니다',
     agree_terms: '이용 약관 및 개인정보처리방침에 동의합니다',
     view_terms: '약관 보기',
     role_select: '역할 선택',

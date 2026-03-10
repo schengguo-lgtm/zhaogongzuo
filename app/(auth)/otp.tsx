@@ -15,13 +15,17 @@ import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Colors } from '../../src/constants/colors';
 import { useAuthStore } from '../../src/store/authStore';
+import { persistSession } from '../../src/hooks/useAuth';
 import type { User } from '../../src/types';
 
 const OTP_LENGTH = 6;
 const RESEND_SECONDS = 60;
 
-// TODO (Production): Replace mock auth with real Firebase OTP verification.
-// import { verifyOtp } from '../../src/services/auth';
+// TODO (Production): Replace mock auth with real Firebase Phone OTP.
+// Steps:
+//  1. Run: npx expo install @react-native-firebase/app @react-native-firebase/auth
+//  2. Configure google-services.json (Android) and GoogleService-Info.plist (iOS)
+//  3. Replace mockSignIn below with: const user = await verifyOtp(verificationId, code);
 
 function mockSignIn(phone: string): User {
   return {
@@ -39,7 +43,7 @@ export default function OtpScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const { phone } = useLocalSearchParams<{ phone: string }>();
-  const { setFirebaseUser, setAppUser } = useAuthStore();
+  const { setAppUser } = useAuthStore();
   const [code, setCode] = useState('');
   const [loading, setLoading] = useState(false);
   const [countdown, setCountdown] = useState(RESEND_SECONDS);
@@ -56,15 +60,15 @@ export default function OtpScreen() {
     if (code.length !== OTP_LENGTH) return;
     setLoading(true);
     try {
-      // TODO (Production):
-      // const user = await verifyOtp(verificationId, code);
-      // setFirebaseUser(user);
+      // TODO (Production): replace with real Firebase OTP
+      // const fbUser = await verifyOtp(verificationId, code);
+      // setFirebaseUser(fbUser);
 
-      // MVP mock: any 6-digit code accepted
-      const mockUser = mockSignIn(phone ?? '');
-      setAppUser(mockUser);
-      // Simulate setting firebase user (null = use appUser only in MVP)
-      setFirebaseUser(null);
+      // Demo mode: any 6-digit code is accepted
+      const user = mockSignIn(phone ?? '');
+      setAppUser(user);
+      // Save session so the user stays logged in after restart
+      await persistSession(user, false);
 
       router.replace('/(auth)/role');
     } catch {
@@ -77,8 +81,7 @@ export default function OtpScreen() {
   const handleResend = () => {
     if (countdown > 0) return;
     setCountdown(RESEND_SECONDS);
-    // TODO: re-trigger OTP send
-    Alert.alert('', '인증 코드가 재전송되었습니다. (mock)');
+    Alert.alert('', t('auth.resend_success'));
   };
 
   return (
@@ -109,7 +112,7 @@ export default function OtpScreen() {
             textAlign="center"
           />
 
-          {/* Visual OTP dots */}
+          {/* Visual OTP indicator dots */}
           <View style={styles.dotsRow}>
             {Array.from({ length: OTP_LENGTH }).map((_, i) => (
               <View
@@ -144,11 +147,6 @@ export default function OtpScreen() {
                 : t('auth.resend')}
             </Text>
           </TouchableOpacity>
-
-          {/* DEV NOTE */}
-          <Text style={styles.devNote}>
-            🛠 MVP: Enter any 6 digits to continue
-          </Text>
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -238,12 +236,5 @@ const styles = StyleSheet.create({
   },
   resendDisabled: {
     color: Colors.text.disabled,
-  },
-  devNote: {
-    textAlign: 'center',
-    fontSize: 12,
-    color: Colors.text.disabled,
-    marginTop: 12,
-    fontStyle: 'italic',
   },
 });
