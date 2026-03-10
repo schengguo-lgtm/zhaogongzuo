@@ -5,6 +5,28 @@ Supports Korean (한국어), Chinese (中文), and English.
 
 ---
 
+## 🚀 iOS 模拟器快速启动（3步，无需任何账号）
+
+> **前提**：Mac 电脑 + 已安装 Xcode（从 App Store 安装，包含 iOS 模拟器）
+
+```bash
+# 1. 安装依赖（只需运行一次）
+npm install
+
+# 2. 启动开发服务器
+npx expo start
+
+# 3. 在终端里按 i 键 → 自动打开 iOS 模拟器
+```
+
+**登录方式（演示模式）**：
+- 手机号：输入任意号码（如 `010-1234-5678`）
+- OTP 验证码：输入**任意 6 位数字**即可通过（如 `123456`）
+
+> 🔥 **无需配置 Firebase、Google Maps 或任何 API Key** — 所有数据均为模拟数据，可以完整体验 App 的所有界面。
+
+---
+
 ## Tech Stack
 
 | Category | Choice | Notes |
@@ -32,7 +54,7 @@ cd zhaogongzuo
 npm install
 ```
 
-### 2. Configure environment
+### 2. Configure environment (optional — only needed for production features)
 
 ```bash
 cp .env.example .env
@@ -45,15 +67,29 @@ cp .env.example .env
 npx expo start
 ```
 
-Scan the QR code with Expo Go on your device, or press `i` (iOS simulator) / `a` (Android emulator).
+Press `i` to open in iOS Simulator, `a` for Android emulator, or scan the QR code with Expo Go on your device.
+
+---
+
+## Demo Mode vs. Production Mode
+
+| Feature | Demo Mode (no config needed) | Production Mode |
+|---|---|---|
+| Login | Any phone + any 6 digits | Real SMS OTP via Firebase |
+| Map | Apple Maps (no key needed) | Google Maps / Naver Maps |
+| Job Sites | 10 mock sites across Seoul | Real Firestore data |
+| Chat | Mock messages | Real-time Firestore |
+| Apply | Local state only | Firestore + notifications |
+| Documents | Mock upload UI | Firebase Storage |
+| Session | Persisted in AsyncStorage | Same |
 
 ---
 
 ## Environment Variables
 
-See `.env.example` for all required variables.
+See `.env.example` for all required variables. None are required for demo mode.
 
-### Firebase Setup
+### Firebase Setup (production only)
 
 1. Create a Firebase project at https://console.firebase.google.com
 2. Enable **Phone Authentication** in Firebase Auth
@@ -135,21 +171,22 @@ zhaogongzuo/
 
 | Feature | Status | Notes |
 |---|---|---|
-| Language selection (ko/zh/en) | ✅ MVP | Persisted in AsyncStorage |
-| Phone login (OTP) | 🟡 Mock | Any 6 digits work; wire up Firebase for production |
-| Role selection | ✅ MVP | worker / employer / both |
-| Map with mock sites | ✅ MVP | 10 sites across Seoul/Korea |
-| List view toggle | ✅ MVP | Toggle between map and list |
-| GPS location + distance | ✅ MVP | Calculates distance from user location |
-| Site detail | ✅ MVP | Shows all jobs, wages, requirements |
-| Apply for job | ✅ MVP | Local state; wire up Firestore |
-| Daily application limit | ✅ MVP | Client-side (10/day); add server-side too |
-| Chat rooms | ✅ MVP | Mock data; wire up Firestore subscriptions |
+| Language selection (ko/zh/en) | ✅ Complete | Persisted in AsyncStorage |
+| Phone login (OTP) | ✅ Demo ready | Any 6 digits work; wire Firebase for production |
+| Role selection | ✅ Complete | worker / employer / both; persisted |
+| Session persistence | ✅ Complete | Stays logged in after restart |
+| Map with mock sites | ✅ Complete | 10 sites across Seoul/Korea |
+| List view toggle | ✅ Complete | Toggle between map and list |
+| GPS location + distance | ✅ Complete | Calculates distance from user location |
+| Site detail | ✅ Complete | Shows all jobs, wages, requirements |
+| Apply for job | ✅ Complete | Local state; wire up Firestore for production |
+| Daily application limit | ✅ Complete | Client-side (10/day); add server-side too |
+| Chat rooms | ✅ Complete | Mock data; wire up Firestore subscriptions |
 | Document upload | 🟡 Mock | UI ready; wire up Firebase Storage |
 | Document 24h authorization | 🟡 Mock | UI + flow ready; wire up Firestore |
-| Employer dashboard | ✅ MVP | Accept/reject applicants |
+| Employer dashboard | ✅ Complete | Accept/reject applicants |
 | Company verification | 🟡 UI only | Manual review flow (admin backend needed) |
-| Legal disclaimer | ✅ MVP | |
+| Legal disclaimer | ✅ Complete | |
 | Rate limiting | 🟡 Client-only | Add Cloud Functions for server-side |
 
 ---
