@@ -13,17 +13,37 @@ Supports Korean (한국어), Chinese (中文), and English.
 
 ### 第 0 步：找到项目路径，打开终端
 
-**如果你是从 GitHub 克隆下来的：**
+**已知项目路径？直接在终端输入 `cd` 命令：**
 
-项目通常在你运行 `git clone` 时所在的目录。最常见的位置是：
+打开**终端**（按 `⌘ + 空格`，搜索"终端"，回车），然后输入：
 
-```
-~/Documents/zhaogongzuo
-~/Desktop/zhaogongzuo
-~/zhaogongzuo
+```bash
+cd <你的项目路径>/zhaogongzuo
 ```
 
-**不确定路径？用 Finder 找一下：**
+例如，如果项目在 `文件` 文件夹里，用户名是 `chengguo`：
+
+```bash
+cd ~/文件/zhaogongzuo
+```
+
+---
+
+> ⚠️ **中文 macOS 特别说明：Finder 显示的路径 ≠ 终端里的路径**
+>
+> 在中文系统的 Finder 里，路径看起来是：
+> ```
+> /用户/chengguo/文件/zhaogongzuo
+> ```
+> 但在**终端**里，你需要把 `/用户/你的用户名` 替换成 `~`，写成：
+> ```bash
+> cd ~/文件/zhaogongzuo
+> ```
+> 规律：**`/用户/XXX` → 终端里写 `~`**（`~` 代表你自己的主文件夹）
+
+---
+
+**不知道路径？用 Finder 找一下（最简单的方法）：**
 
 1. 打开 **Finder**（Dock 底部的笑脸图标）
 2. 菜单栏点击 **前往 → 个人** （或按 `⌘ + Shift + H`）
@@ -33,17 +53,16 @@ Supports Korean (한국어), Chinese (中文), and English.
 > 💡 **如果右键菜单里没有"在终端中打开"**：
 > 1. 打开 **终端**（按 `⌘ + 空格`，搜索"终端"，回车）
 > 2. 把 Finder 里的 `zhaogongzuo` 文件夹**直接拖拽**到终端窗口里
-> 3. 松手后路径会自动填入，然后在路径前面手动加 `cd ` 并回车
+> 3. 路径自动填入后，在最前面手动加 `cd ` 然后回车
 
-**如果你是下载的 ZIP 文件：**
-
-ZIP 一般解压到 `~/Downloads/zhaogongzuo-main` 或 `~/Downloads/zhaogongzuo`。
-打开终端后输入：
+**常见克隆路径（从 GitHub clone 下来的）：**
 
 ```bash
-cd ~/Downloads/zhaogongzuo-main
-# 如果报错，试试：
-cd ~/Downloads/zhaogongzuo
+cd ~/文件/zhaogongzuo          # 放在"文件"文件夹
+cd ~/Documents/zhaogongzuo     # 放在 Documents
+cd ~/Desktop/zhaogongzuo       # 放在桌面
+cd ~/Downloads/zhaogongzuo     # 放在下载
+cd ~/Downloads/zhaogongzuo-main  # ZIP 解压后
 ```
 
 **确认路径正确的方法** — 在终端输入以下命令，应该能看到 `package.json`：
