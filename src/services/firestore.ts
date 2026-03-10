@@ -179,7 +179,7 @@ export async function approveDocumentAuth(authId: string, workerId: string): Pro
     authorizedAt: Timestamp.fromDate(now),
     expiresAt: Timestamp.fromDate(expiresAt),
     auditLog: [
-      ...(data.auditLog as unknown[]),
+      ...(data.auditLog as AuditLogEntry[]),
       {
         timestamp: Timestamp.fromDate(now),
         action: 'authorized',

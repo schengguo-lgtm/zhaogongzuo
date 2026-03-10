@@ -21,6 +21,7 @@ import { JobCard } from '../../src/components/JobCard';
 import { useAuthStore } from '../../src/store/authStore';
 import { useRateLimit } from '../../src/hooks/useRateLimit';
 import { Config } from '../../src/constants/config';
+import { formatDistance } from '../../src/utils/geo';
 import { useEffect } from 'react';
 
 export default function SiteDetailScreen() {
@@ -106,9 +107,7 @@ export default function SiteDetailScreen() {
           <Text style={styles.address}>📍 {site.address}</Text>
           {site.distanceKm !== undefined && (
             <Text style={styles.distance}>
-              {site.distanceKm < 1
-                ? `${Math.round(site.distanceKm * 1000)}m`
-                : `${site.distanceKm.toFixed(1)}km`}
+              {formatDistance(site.distanceKm)}
             </Text>
           )}
         </View>

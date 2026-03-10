@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Colors } from '../constants/colors';
 import type { ConstructionSite } from '../types';
 import { getSiteAvailabilityStatus } from '../mock/sites';
+import { formatDistance } from '../utils/geo';
 
 interface SiteCardProps {
   site: ConstructionSite;
@@ -37,9 +38,7 @@ export const SiteCard: React.FC<SiteCardProps> = ({ site, onPress }) => {
         <Text style={styles.statusLabel}>{statusLabel}</Text>
         {site.distanceKm !== undefined && (
           <Text style={styles.distance}>
-            {site.distanceKm < 1
-              ? `${Math.round(site.distanceKm * 1000)}m`
-              : `${site.distanceKm.toFixed(1)}km`}
+            {formatDistance(site.distanceKm)}
           </Text>
         )}
       </View>

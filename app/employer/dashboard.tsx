@@ -69,13 +69,19 @@ export default function EmployerDashboardScreen() {
 
   const handleAccept = (appId: string) => {
     setApplications((prev) =>
-      prev.map((a) => a.id === appId ? { ...a, status: 'accepted', updatedAt: new Date() } : a),
+      prev.map((a) => {
+        if (a.id !== appId) return a;
+        return { ...a, status: 'accepted' as const, updatedAt: new Date() };
+      }),
     );
   };
 
   const handleReject = (appId: string) => {
     setApplications((prev) =>
-      prev.map((a) => a.id === appId ? { ...a, status: 'rejected', updatedAt: new Date() } : a),
+      prev.map((a) => {
+        if (a.id !== appId) return a;
+        return { ...a, status: 'rejected' as const, updatedAt: new Date() };
+      }),
     );
   };
 
