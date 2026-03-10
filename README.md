@@ -163,6 +163,24 @@ ls
 
 ### 第 2–4 步：启动 App
 
+> ⚠️ **最常见错误：忘记先进入项目文件夹！**
+>
+> 运行下面任何命令之前，终端里必须显示你在 `zhaogongzuo` 目录里。
+> 检查方法：看终端提示符，例如：
+> ```
+> chengguo@MacBookPro zhaogongzuo %    ← ✅ 正确，在项目文件夹里
+> chengguo@MacBookPro Desktop %        ← ❌ 错误，需要先 cd
+> chengguo@MacBookPro ~ %              ← ❌ 错误，需要先 cd
+> ```
+> 如果不在 `zhaogongzuo` 里，先运行：
+> ```bash
+> cd ~/Desktop/zhaogongzuo   # 如果项目在桌面
+> # 或
+> cd ~/Documents/zhaogongzuo # 如果项目在文稿/Documents
+> # 或
+> cd ~/文件/zhaogongzuo       # 如果项目在"文件"里
+> ```
+
 进入项目目录后，在终端依次运行：
 
 ```bash
@@ -188,6 +206,7 @@ npx expo start
 
 | 问题 | 解决方法 |
 |---|---|
+| `ConfigError: The expected package.json path: .../Desktop/package.json does not exist` | 你在错误的目录里运行了命令。先运行 `cd zhaogongzuo` 进入项目文件夹，再重新运行命令 |
 | `npm: command not found` | 先安装 Node.js：去 https://nodejs.org 下载 LTS 版本 |
 | `npx expo start` 之后没有出现 `i` 选项 | 确认已安装 Xcode，并在 Xcode → Settings → Platforms 里下载至少一个 iOS 模拟器 |
 | 模拟器打开但 App 白屏转圈不动 | 在终端按 `r` 键重新加载；或关掉模拟器重新按 `i` |
