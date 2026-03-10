@@ -1,0 +1,32 @@
+/**
+ * Geographic utility functions.
+ */
+
+/**
+ * Calculate the distance between two coordinates using the Haversine formula.
+ * Returns distance in kilometers.
+ */
+export function calcDistanceKm(
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number,
+): number {
+  const R = 6371; // Earth's radius in km
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos((lat1 * Math.PI) / 180) *
+    Math.cos((lat2 * Math.PI) / 180) *
+    Math.sin(dLon / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+/**
+ * Format a distance in km to a human-readable string.
+ * Shows meters for distances < 1 km, km with one decimal otherwise.
+ */
+export function formatDistance(km: number): string {
+  return km < 1 ? `${Math.round(km * 1000)}m` : `${km.toFixed(1)}km`;
+}
