@@ -5,25 +5,87 @@ Supports Korean (한국어), Chinese (中文), and English.
 
 ---
 
-## 🚀 iOS 模拟器快速启动（3步，无需任何账号）
+## 🚀 iOS 模拟器快速启动（Mac 用户）
 
-> **前提**：Mac 电脑 + 已安装 Xcode（从 App Store 安装，包含 iOS 模拟器）
+> **前提**：Mac 电脑 + 已安装 Xcode（从 App Store 安装，包含 iOS 模拟器）+ 已安装 Node.js
 
-```bash
-# 1. 安装依赖（只需运行一次）
-npm install
+---
 
-# 2. 启动开发服务器
-npx expo start
+### 第 0 步：找到项目路径，打开终端
 
-# 3. 在终端里按 i 键 → 自动打开 iOS 模拟器
+**如果你是从 GitHub 克隆下来的：**
+
+项目通常在你运行 `git clone` 时所在的目录。最常见的位置是：
+
+```
+~/Documents/zhaogongzuo
+~/Desktop/zhaogongzuo
+~/zhaogongzuo
 ```
 
-**登录方式（演示模式）**：
+**不确定路径？用 Finder 找一下：**
+
+1. 打开 **Finder**（Dock 底部的笑脸图标）
+2. 菜单栏点击 **前往 → 个人** （或按 `⌘ + Shift + H`）
+3. 在文件夹列表里找名字叫 `zhaogongzuo` 的文件夹
+4. 找到之后，**右键点击那个文件夹** → 选择 **"在终端中打开"**（macOS Sonoma 及以上）
+
+> 💡 **如果右键菜单里没有"在终端中打开"**：
+> 1. 打开 **终端**（按 `⌘ + 空格`，搜索"终端"，回车）
+> 2. 把 Finder 里的 `zhaogongzuo` 文件夹**直接拖拽**到终端窗口里
+> 3. 松手后路径会自动填入，然后在路径前面手动加 `cd ` 并回车
+
+**如果你是下载的 ZIP 文件：**
+
+ZIP 一般解压到 `~/Downloads/zhaogongzuo-main` 或 `~/Downloads/zhaogongzuo`。
+打开终端后输入：
+
+```bash
+cd ~/Downloads/zhaogongzuo-main
+# 如果报错，试试：
+cd ~/Downloads/zhaogongzuo
+```
+
+**确认路径正确的方法** — 在终端输入以下命令，应该能看到 `package.json`：
+
+```bash
+ls
+# 输出里应该有：app/  package.json  README.md  src/  ...
+```
+
+---
+
+### 第 1–3 步：启动 App
+
+进入项目目录后，在终端依次运行：
+
+```bash
+# 第 1 步：安装依赖（只需运行一次，之后不用再运行）
+npm install
+
+# 第 2 步：启动开发服务器
+npx expo start
+
+# 第 3 步：等终端出现菜单后，按键盘上的 i 键
+# → 会自动打开 iOS 模拟器并加载 App
+```
+
+**登录方式（演示模式，无需真实账号）**：
 - 手机号：输入任意号码（如 `010-1234-5678`）
 - OTP 验证码：输入**任意 6 位数字**即可通过（如 `123456`）
 
 > 🔥 **无需配置 Firebase、Google Maps 或任何 API Key** — 所有数据均为模拟数据，可以完整体验 App 的所有界面。
+
+---
+
+### 常见问题
+
+| 问题 | 解决方法 |
+|---|---|
+| `npm: command not found` | 先安装 Node.js：去 https://nodejs.org 下载 LTS 版本 |
+| `npx expo start` 之后没有出现 `i` 选项 | 确认已安装 Xcode，并在 Xcode → Settings → Platforms 里下载至少一个 iOS 模拟器 |
+| 模拟器打开但 App 白屏转圈不动 | 在终端按 `r` 键重新加载；或关掉模拟器重新按 `i` |
+| `cannot find module` 报错 | 重新运行 `npm install`，然后再 `npx expo start` |
 
 ---
 
