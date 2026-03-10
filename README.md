@@ -42,7 +42,19 @@ Supports Korean (한국어), Chinese (中文), and English.
 
 ---
 
-## 🚀 iOS 模拟器快速启动（Mac 用户）
+## 🚀 模拟器快速启动
+
+### 选哪种方式？
+
+| 方式 | 适合谁 | 难度 | 需要什么 |
+|---|---|---|---|
+| 📱 **iOS 模拟器**（推荐） | Mac 用户 | ⭐ 最简单 | Mac + Xcode + Node.js |
+| 🤖 **Android 模拟器** | Mac 或 Windows 用户 | ⭐⭐ 中等 | Android Studio + Node.js |
+| 🔗 **Expo Go 实机** | iPhone 或 Android 手机用户 | ⭐ 简单 | 手机上安装 Expo Go App |
+
+---
+
+## 📱 iOS 模拟器（Mac 用户）
 
 > **前提**：Mac 电脑 + 已安装 Xcode（从 App Store 安装，包含 iOS 模拟器）+ 已安装 Node.js
 
@@ -214,6 +226,126 @@ npx expo start
 | 提示"No usable data found"或地图空白 | 正常现象，演示模式地图可能需要几秒加载 |
 | 模拟器一直停在启动画面（Splash Screen） | 终端按 `Ctrl+C` 停止，重新运行 `npx expo start`，再按 `i` |
 | OTP 输完没有跳转 | 确认输入了**6 位**数字（如 `123456`），然后点确认 |
+
+---
+
+## 🤖 Android 模拟器（Mac 或 Windows 用户）
+
+> **前提**：已安装 Android Studio（免费，来自 Google）+ 已安装 Node.js
+
+---
+
+### 第 0 步：安装 Android Studio（只需做一次）
+
+1. 打开浏览器，访问 **https://developer.android.com/studio**
+2. 点击 **"Download Android Studio"** → 下载安装包
+3. Mac：把 `Android Studio.app` 拖到"应用程序"文件夹
+   Windows：双击 `.exe` 安装包，一路"Next"
+4. 打开 Android Studio，按照**首次启动向导**完成安装（会自动下载 SDK，约 1–2 GB，需要几分钟）
+
+---
+
+### 第 1 步：创建 Android 虚拟设备（AVD）
+
+1. 打开 Android Studio
+2. 点击菜单 **Tools → Device Manager**（或右侧边栏 📱 图标）
+3. 点击 **"Create Device"**（或 `+` 按钮）
+4. 选设备型号：推荐选 **Pixel 6** → 点击 **"Next"**
+5. 选系统镜像：推荐选 **API 34（Android 14）** → 点击右边的 **⬇ 下载** 按钮等待下载
+6. 下载完成后，选中那个镜像 → 点击 **"Next"** → **"Finish"**
+
+---
+
+### 第 2 步：启动 Android 模拟器
+
+在 Device Manager 窗口里，找到刚创建的设备，点击右侧的 **▶ 播放按钮**。
+
+等待手机屏幕出现（第一次启动可能需要 1–2 分钟）。屏幕亮起、出现安卓桌面后再继续下一步。
+
+---
+
+### 第 3 步：进入项目目录
+
+打开**终端**（Mac）或**命令提示符/PowerShell**（Windows），进入项目文件夹：
+
+```bash
+# Mac：
+cd ~/文件/zhaogongzuo          # 如果放在"文件"
+cd ~/Documents/zhaogongzuo     # 如果放在 Documents
+cd ~/Desktop/zhaogongzuo       # 如果放在桌面
+
+# Windows（命令提示符）：
+cd C:\Users\你的用户名\Desktop\zhaogongzuo
+```
+
+确认路径正确：
+
+```bash
+ls        # Mac — 应该看到 package.json
+dir       # Windows — 应该看到 package.json
+```
+
+---
+
+### 第 4–6 步：安装依赖并启动
+
+```bash
+# 第 4 步：安装依赖（只需运行一次）
+npm install
+
+# 第 5 步：启动开发服务器
+npx expo start
+
+# 第 6 步：等终端出现菜单后，按键盘上的 a 键
+# → 会自动在已打开的 Android 模拟器里加载 App
+```
+
+**登录方式**：手机号任意（如 `010-1234-5678`），OTP 输入任意 **6 位数字**（如 `123456`）。
+
+---
+
+### Android 常见问题
+
+| 问题 | 解决方法 |
+|---|---|
+| 按 `a` 后提示 `No Android device found` | 先打开 Android Studio 并启动模拟器，等桌面完全亮起后再按 `a` |
+| `SDK location not found` | 打开 Android Studio → SDK Manager，记下 SDK 路径；Mac/Linux 终端运行 `export ANDROID_HOME=<路径>`；Windows 命令提示符运行 `set ANDROID_HOME=<路径>`（仅当前会话有效，永久生效需添加到系统环境变量） |
+| 模拟器显示 `INSTALL_FAILED_INSUFFICIENT_STORAGE` | 在模拟器设置里扩大存储；或重新创建 AVD 时选更大的内部存储 |
+| Windows 上 `npm: command not found` | 去 https://nodejs.org 下载 LTS，安装后重新打开命令提示符 |
+| 模拟器打开但 App 白屏 | 终端按 `r` 键重新加载 |
+
+---
+
+## 🔗 用真实手机测试（Expo Go）
+
+> **最简单的方式**：无需模拟器，用你自己的 iPhone 或 Android 手机直接扫码运行。
+
+### 前提
+
+- iPhone 或 Android 手机一部
+- 手机和电脑**连接同一个 WiFi**
+- 手机上安装好 **Expo Go**：
+  - iPhone：App Store 搜索 "Expo Go"
+  - Android：Google Play 搜索 "Expo Go"
+
+### 步骤
+
+```bash
+# 1. 在电脑终端进入项目目录
+cd ~/Desktop/zhaogongzuo   # 根据实际路径调整
+
+# 2. 安装依赖（第一次需要）
+npm install
+
+# 3. 启动开发服务器
+npx expo start
+```
+
+终端出现二维码后：
+- **iPhone**：打开**相机**直接对着二维码扫
+- **Android**：打开 **Expo Go App**，点"Scan QR code"扫描
+
+> ⚠️ **注意**：手机和电脑必须在**同一个 WiFi**下才能连接。
 
 ---
 
